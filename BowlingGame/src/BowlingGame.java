@@ -28,8 +28,9 @@ public class BowlingGame {
 	private void toIntegerList() 
 	{
 		this.game = this.game.replace("][", ",");
-		this.game = this.game.replace("[", "");
-		this.game = this.game.replace("]", "");
+		this.game=this.game.substring(1, this.game.length()-1);
+		//this.game = this.game.replace("[", "");
+		//this.game = this.game.replace("]", "");
 		String[] newGame = this.game.split(",");
 		for (int i = 0; i < newGame.length; i++) 
 		{
@@ -39,6 +40,10 @@ public class BowlingGame {
 	}
 	public Boolean validateScores()
 	{
+		if (this.game == null)
+			return false;
+		if (this.game == "")
+			return false;
 		try {
 			toIntegerList();
 		}
@@ -50,19 +55,22 @@ public class BowlingGame {
 		for (int i = 0; i < Scores.size(); i++) {
 			if (Scores.get(i) < 0 || Scores.get(i) > 10)
 				return false;
-			if ((i % 2 == 0) && (i < 20))
-				if (Scores.get(i) + Scores.get(i+1) > 18)
+			if ((i % 2 == 0) && (i < 20)) {
+				if (Scores.get(i) + Scores.get(i+1) > 10)
 				{
 				return false;
 				}
-		}
+			}
+			}
 		
 		if (Scores.size() == 22 && Scores.get(Scores.size() - 4) != 10)
 			return false; 
 		//System.out.println(Scores.size());
 		if (Scores.size() == 21 && (Scores.get(Scores.size() - 3) + Scores.get(Scores.size()-2) != 10))
 			return false;
-		if (Scores.size() == 20 && Scores.get(Scores.size() - 3) == 10)
+		if (Scores.size() == 20 && Scores.get(Scores.size() - 2) == 10)
+			return false; 
+		if (Scores.size() == 20 && (Scores.get(Scores.size() - 2) + Scores.get(Scores.size() - 1) == 10))
 			return false; 
 		return true;
 		
